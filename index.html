@@ -1,44 +1,73 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title> Mijn Eerste Game</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijn Eerste Game</title>
   <style>
+    :root {
+      --bg: #111;
+      --canvas-bg: #000;
+      --border: #fff;
+      --text: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #111;
+      min-height: 100vh;
+      background: var(--bg);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;      
+      font-family: Arial, sans-serif;
     }
+
     canvas {
-      border: 2px solid #fff;
-      background: #000
+      border: 2px solid var(--border);
+      background: var(--canvas-bg);
+      display: block;
+      width: min(90vw, 640px);
+      height: auto;
     }
   </style>
 </head>
 <body>
-<canvas id="gameCanvas" width="640" height="480"></canvas>
-<script>
-  const canvas = doucment.getElemntById("gameCanvas");
-  const ctx = canvas.getContext("2d");
-  let score = 0
-  function update() {
-    score++;
-  }
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "32px Arial";
-    ctx.fillText("Score / Frames: " + score, 50, 80);
-  }
-  function gameLoop() {
-    update();
-    draw();
-    requestAnimationFrame(gameLoop)
-  }
-  gameLoop();
-</script>
+  <canvas id="gameCanvas" width="640" height="480"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let score = 0;
+
+    function update() {
+      score += 1;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "32px Arial";
+      ctx.textBaseline = "top";
+      ctx.fillText("Score / Frames: " + score, 50, 40);
+
+      // Optional extra visual element
+      ctx.fillStyle = "#00ff88";
+      ctx.fillRect(50, 100, 100 + (score % 200), 20);
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
 </body>
 </html>
